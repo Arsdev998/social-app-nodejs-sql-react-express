@@ -10,8 +10,17 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 // middleware
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+
+  next();
+});
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
@@ -20,4 +29,4 @@ app.use("/api/post", postRoutes);
 app.use("/api/comment", commentRoutes);
 app.use("/api/liked", likedRoutes);
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+app.listen(8000, () => console.log("Server running on port 8000"));
